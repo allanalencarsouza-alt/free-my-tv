@@ -95,7 +95,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
     private static final float L_TALL_W = 320, L_CARD_GAP = 40, L_BUTTON = 68, L_BUTTON_GAP = 20, L_BUTTON_CY = 103;
     private static final float L_PLATTER_TOP = 814, L_TILE_H = 126;
     private static final float L_DATE_BASE = 330, L_CLOCK_BASE = 540, L_WEATHER_BASE = 626, L_QUOTES_BASE = 694;
-    private static final int L_INK = 0xFF1D1D1F, L_DIM = 0xFF6E6E73, L_FAINT = 0xFF8E8E93;
+    private static final int L_INK = 0xFF1D1D1F, L_DIM = 0xFF48484A, L_FAINT = 0xFF8E8E93;
     private static String[] tabs;
     private static int tabsGeneration = -1;
     private static final String[] TAB_KIND = {null, "movie", "tv"};
@@ -1490,7 +1490,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
     }
 
     private void drawerCard(Canvas c, RectF r) {
-        drawerGlass(c, r, 30 * k, 0.72f, 0x1A000000, 10 * k);
+        drawerGlass(c, r, 30 * k, 0.28f, 0x1A000000, 10 * k);
     }
 
     private void drawDrawer(Canvas c) {
@@ -1518,7 +1518,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
     /** Square drawer button: symbol and name; an input with no device is dimmed. Focused: white, with dark text. */
     private void drawDrawerTile(Canvas c, int i) {
         HomeApps.Item it = drawerItems.get(i);
-        float f = Ui.clamp(drawerFocus[i].value), s = 1 + 0.07f * f;
+        float f = Ui.clamp(drawerFocus[i].value), s = 1 + 0.14f * f;
         RectF base = drawerRects[i];
         float cx = base.centerX(), cy = base.centerY();
         cell.set(cx - base.width() * s / 2, cy - base.height() * s / 2, cx + base.width() * s / 2, cy + base.height() * s / 2);
@@ -1529,7 +1529,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
             shadow.setColor(Ui.alpha(0xFF000000, 0.45f * f));
             shadows.draw(c, tmp, r, SHADOW_BLUR * k, shadow);
         }
-        if (f < 0.99f) drawerGlass(c, cell, r, 0.7f, 0x14000000, 6 * k);
+        if (f < 0.99f) drawerGlass(c, cell, r, 0.28f, 0x14000000, 6 * k);
         if (f > 0.01f) {
             fill.setShader(null);
             fill.setColor(Ui.alpha(WHITE, f));
@@ -1792,7 +1792,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
             float x = left + col * (GRID_W + GRID_GAP) * k;
             gridCell.set(x, y, x + GRID_W * k, y + GRID_H * k);
             float f = gridFocus[i].value;
-            drawCard(c, others.get(i).tile, gridCell, GRID_RADIUS * k, f, 0.08f);
+            drawCard(c, others.get(i).tile, gridCell, GRID_RADIUS * k, f, 0.12f);
             if (sheetOpen && i == gridIndex) focusedCell.set(cell);
             gridLabel.setColor(blend(0x99FFFFFF, 0xFFFFFFFF, Ui.clamp(f)));
             c.drawText(gridLabels[i], gridCell.centerX(), gridCell.bottom + (40 + 6 * f) * k, gridLabel);
@@ -1837,8 +1837,8 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
         c.drawRoundRect(cell, r, r, border);
         if (f > 0.01f) {
             rim.setShader(null);
-            rim.setColor(Ui.alpha(0xFFFFFFFF, 0.4f * fc));
-            rim.setStrokeWidth(1.5f * k);
+            rim.setColor(Ui.alpha(0xFFFFFFFF, 0.85f * fc));
+            rim.setStrokeWidth(2.5f * k);
             c.drawRoundRect(cell, r, r, rim);
             rim.setStrokeWidth(2.5f * k);
         }
@@ -2747,23 +2747,23 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
 
     /**
      * Recommendation card: the title's photo (already at the focused card size, so it stays sharp), rounded corners and
-     * a soft shadow; when focused, it grows 5%, rises and lights up its border. Below it, the title (and on the large
+     * a soft shadow; when focused, it grows 8%, rises and lights up its border. Below it, the title (and on the large
      * card, genre · runtime · service).
      */
     private void drawLightCard(Canvas c, int i) {
         RectF base = cardRects[i];
         Recs.Pick p = i < cards.size() ? cards.get(i) : null;
-        float v = cardFocus[i].value, f = Ui.clamp(v), s = 1 + 0.05f * v;
+        float v = cardFocus[i].value, f = Ui.clamp(v), s = 1 + 0.08f * v;
         float bw = base.width(), bh = base.height(), r0 = 18 * k;
-        float cx = base.centerX(), cy = base.centerY() - 6 * k * v;
+        float cx = base.centerX(), cy = base.centerY() - 10 * k * v;
         cell.set(cx - bw * s / 2, cy - bh * s / 2, cx + bw * s / 2, cy + bh * s / 2);
         float r = r0 * s;
         c.save();
         c.translate(cx, cy);
         c.scale(s, s);
         tmp.set(-bw / 2, -bh / 2, bw / 2, bh / 2);
-        tmp.offset(0, (10 + 14 * f) * k);
-        shadowDeep.setColor(Ui.alpha(0xFF000000, tone(0.14f, 0.32f) + tone(0.2f, 0.28f) * f));
+        tmp.offset(0, (10 + 16 * f) * k);
+        shadowDeep.setColor(Ui.alpha(0xFF000000, tone(0.14f, 0.35f) + tone(0.25f, 0.35f) * f));
         shadows.draw(c, tmp, r0, DEEP_BLUR * k, shadowDeep);
         c.restore();
         Backdrop b = p == null ? null : recs.backdrop(p);
@@ -2797,7 +2797,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
             sheen.setAlpha(255);
             rim.setShader(lightRims[i]);
             rim.setAlpha(alpha);
-            rim.setStrokeWidth(2.5f * k / s);
+            rim.setStrokeWidth(3.5f * k / s);
             c.drawRoundRect(tmp, r0, r0, rim);
             rim.setStrokeWidth(2.5f * k);
             rim.setAlpha(255);
