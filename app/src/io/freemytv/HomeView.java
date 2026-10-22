@@ -1144,11 +1144,11 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
         if (shelf.isEmpty()) return;
         float radius = (TILE_RADIUS + SHELF_PAD) * k;
         tmp.set(platterRect);
-        tmp.offset(0, 18 * k);
-        shadow.setColor(tone(0x1F000000, 0x52000000));
+        tmp.offset(0, 12 * k);
+        shadow.setColor(tone(0x14000000, 0x3D000000));
         shadows.draw(c, tmp, radius, SHADOW_BLUR * k, shadow);
-        // White glass by day; smoked glass at night.
-        scene.liquid(c, platterRect, radius, tone(0xFFFFFFFF, SMOKE), tone(0.42f, 0.12f), tone(0.03f, 0.08f),
+        // Vidro cristalino translúcido de dia e smoked sutil com bisel definido à noite
+        scene.liquid(c, platterRect, radius, tone(0xFFFFFFFF, SMOKE), tone(0.24f, 0.16f), tone(0.05f, 0.12f),
                 tone(30, 34) * k, tone(22, 28) * k, tone(0.65f, 0.95f), 1);
     }
 
